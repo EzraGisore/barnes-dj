@@ -48,7 +48,8 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
          views.activate, name='activate'),
-    path('signin/', views.signin, name='signin')
+    path('signin/', views.signin, name='signin'),
+    path('sign_in/', views.sign_in, name='sign_in')
 
 
 ]

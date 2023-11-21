@@ -56,33 +56,7 @@
          <!-- end header -->
          <!-- banner -->
 </header><br><br><br>
-<form style="width: 400px;">
-    {% csrf_token %}
-  <!-- Email input -->
-  <div class="form-outline mb-4">
-    <input type="text" name="username" id="form2Example1" class="form-control" />
-    <label class="form-label" for="form2Example1">Username</label>
-  </div>
-
-  <!-- Password input -->
-  <div class="form-outline mb-4">
-    <input type="password" name="password" id="form2Example2" class="form-control" />
-    <label class="form-label" for="form2Example2">Password</label>
-  </div>
-  {% for message in messages %}
-    <p id="messages">{{ message }}</p>
-  {% endfor %}
-  <!-- 2 column grid layout for inline styling -->
-
-
-  <!-- Submit button -->
-  <a class="btn btn-success btn-lg btn-block" href="{% url 'memberpay' %}" role="button">Sign In</a>
-
-  <!-- Register buttons -->
-  <div class="text-center">
-    <p>Not a member? <a href="{% url 'signup' %}">Register</a></p>
-
-  </div>
-</form>
+<h1>Thank you for your email confirmation. Now you can log into your account.</h1>
+<a class="read_more conatct_btn" href="{% url 'sign_in' %}" role="button">Sign In</a>
 </body>
 </html>

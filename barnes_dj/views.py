@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .models import BcMember, JrMember
 from django.contrib.auth import get_user_model
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -44,7 +44,7 @@ def pay(request):
     return render(request, 'payments.html')
 
 
-def login(request):
+##def login(request):
     return render(request,"login.html")
 def register(request):
     return render(request,"register.html")
@@ -140,11 +140,30 @@ def signin(request):
             login(request, user)
             return redirect('memberpay')
         else:
-            messages.info(request, 'Incorrect Username or Password!')
+            return HttpResponse('Incorrect Username or Password!')
 
     context = {}
     return render(request,"signin.html", context)
 
+def sign_in(request):
+    if request.method == 'GET':
+        form = LoginForm()
+        return render(request, 'log.html', {'form': form})
+    elif request.method == 'POST':
+        form = LoginForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+               ## messages.success(request, f'Hi {username.title()}, welcome back!')
+                return redirect('memberpay')
+
+        # form is not valid or user is not authenticated
+        messages.error(request, f'Invalid username or password')
+        return render(request, 'log.html', {'form': form})
 def insertbcdata(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -238,7 +257,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         ##return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
-        return render(request, "signin.html")
+        return render(request, 'signin.html')
     else:
         return HttpResponse('Activation link is invalid!')
 def viewbooks(request):
