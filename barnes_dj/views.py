@@ -17,6 +17,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .token import account_activation_token
 from django.core.mail import EmailMessage
+from django.contrib.auth import authenticate, login, logout
+
 
 cl = MpesaClient()
 stk_push_callback_url = 'https://api.darajambili.com/express-payment'
@@ -128,7 +130,20 @@ def awards(request):
 def library(request):
     return render(request,"library.html")
 def signin(request):
-    return render(request,"signin.html")
+    if request.method =='POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, 'Incorrect Username or Password!')
+
+    context = {}
+    return render(request,"signin.html", context)
+
 def insertbcdata(request):
     if request.method == "POST":
         name = request.POST.get('name')
