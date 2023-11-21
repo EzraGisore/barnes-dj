@@ -38,7 +38,8 @@ def pay(request):
         transaction_desc = 'STK Push Description'
         callback_url = stk_push_callback_url
         r = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-        return JsonResponse(r.response_description, safe=False)
+        ##return JsonResponse(r.response_description, safe=False)
+        return render(request, "dash.html")
 
     return render(request, 'payments.html')
 
@@ -137,7 +138,7 @@ def signin(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('memberpay')
         else:
             messages.info(request, 'Incorrect Username or Password!')
 
@@ -237,7 +238,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         ##return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
-        return render(request, "MembershipPay.html")
+        return render(request, "signin.html")
     else:
         return HttpResponse('Activation link is invalid!')
 def viewbooks(request):
