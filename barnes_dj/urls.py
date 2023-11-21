@@ -44,12 +44,14 @@ urlpatterns = [
     path('junior/', views.junior, name='junior'),
     path('insertjr', views.insertjrdata, name='insertjrdata'),
     path('awards/', views.awards, name='awards'),
-    path('library/', views.library, name='library'),
+    path('library/', views.viewbooks, name='library'),
     path('signup/', views.signup, name='signup'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
          views.activate, name='activate'),
     path('signin/', views.signin, name='signin'),
-    path('sign_in/', views.sign_in, name='sign_in')
+    path('sign_in/', views.sign_in, name='sign_in'),
+    path('lib', views.insertlibbook, name='librarybooks')
+
 
 
 ]

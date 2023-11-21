@@ -8,7 +8,7 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .models import BcMember, JrMember
+from .models import BcMember, JrMember, Book
 from django.contrib.auth import get_user_model
 from .forms import SignupForm, LoginForm
 from django.contrib.sites.shortcuts import get_current_site
@@ -261,4 +261,17 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 def viewbooks(request):
-    return render(request,"viewbooks.html")
+    return render(request,"library.html")
+def insertlibbook(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        image = request.POST.get('image')
+        description = request.POST.get('description')
+
+
+
+        query = Book(title=title, image= image, description=description)
+        query.save()
+        return redirect('librarybooks')
+
+    return render(request, 'libbooks.html')

@@ -41,6 +41,7 @@ def __str__(self):
 
 class Book(models.Model):
     Title = models.CharField(max_length=50)
+    Author = models.CharField(max_length=100)
     image = models.ImageField(upload_to='uploads/images', null=False, blank=False, default="hjhjh")
     description = models.TextField(null=False, blank=False)
 
